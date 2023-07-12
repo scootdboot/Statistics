@@ -41,6 +41,9 @@ public class Statistics
     public static double[] mode(double[] values)
     {
         int[] freqList = new int[values.length];
+        double currentNumCheck;
+        
+
         return new double[0];
     }
 
