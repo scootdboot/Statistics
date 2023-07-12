@@ -6,8 +6,10 @@ public class Statistics
     public static void main(String[] args)
     {
         // TODO take all the inputs
-        double[] values = {99, 50, 42, 23, 23, 21, 14, 13, 12, 7};
+        double[] values = {7.0, 13.0, 42.0, 7.0, 23.0, 42.0};
+        System.out.println(average(values));
         System.out.println(median(values));
+        ArrayHelper.
     }
 
     public static double average(double[] values)
@@ -41,10 +43,48 @@ public class Statistics
     public static double[] mode(double[] values)
     {
         int[] freqList = new int[values.length];
-        double currentNumCheck;
-        
 
-        return new double[0];
+        for (int i = 0; i < values.length; i++)
+        {
+            // if freqList contains a reference to a previous index here just go to the next number
+            if (freqList[i] < 0)
+                continue;
+
+            double numToCheck = values[i];
+            int sumOfDuplicates = 1;
+            // loop through values and find out how many duplicates there are + mark them in freqList
+            for (int j = i + 1; j < values.length; j++)
+            {
+                if (values[j] == numToCheck)
+                {
+                    freqList[j] = (i / -1) - 1;
+                    sumOfDuplicates++;
+                }
+            }
+            // add the frequency to freqList
+            freqList[i] = sumOfDuplicates;
+        }
+
+        int maxFreq = ArrayHelper.max(freqList);
+        int rtnLen = 0;
+        for (int freq : freqList)
+        {
+            if (freq == maxFreq)
+                rtnLen++;
+        }
+
+        double[] rtn = new double[rtnLen];
+        int rtnIndex = 0;
+        for (int i = 0; i < freqList.length; i++)
+        {
+            if (freqList[i] == maxFreq)
+            {
+                rtn[rtnIndex] = values[i];
+                rtnIndex++;
+            }
+        }
+
+        return rtn;
     }
 
     public static double[] most(double[] values)
