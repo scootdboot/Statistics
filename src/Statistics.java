@@ -6,10 +6,30 @@ public class Statistics
     public static void main(String[] args)
     {
         // TODO take all the inputs
-        double[] values = {7.0, 13.0, 42.0, 7.0, 23.0, 42.0};
-        System.out.println(average(values));
-        System.out.println(median(values));
-        ArrayHelper.
+        System.out.print("""
+                    Welcome to Statistics!
+                    This program will calculate the average, median, mode, and most of any number of (double) values!
+                    
+                    How many values will you be entering?\s""");
+
+        Scanner kb = new Scanner(System.in);
+        int numberOfValues = kb.nextInt();
+        double[] values = new double[numberOfValues];
+        System.out.println();
+        for (int i = 0; i < values.length; i++)
+        {
+            System.out.print("> Please enter value #" + (i + 1) + ": ");
+            values[i] = kb.nextDouble();
+        }
+        System.out.println();
+
+        ArrayHelper.display(values);
+        System.out.println("Average: " + average(values));
+        System.out.println("Median: " + median(values));
+        System.out.print("Mode: ");
+        ArrayHelper.display(mode(values));
+        System.out.print("Most: ");
+        ArrayHelper.display(most(values));
     }
 
     public static double average(double[] values)
@@ -65,6 +85,7 @@ public class Statistics
             freqList[i] = sumOfDuplicates;
         }
 
+        // find out how many elements will need to be in the array i return
         int maxFreq = ArrayHelper.max(freqList);
         int rtnLen = 0;
         for (int freq : freqList)
@@ -73,6 +94,7 @@ public class Statistics
                 rtnLen++;
         }
 
+        // actually add all the elements to it and return it
         double[] rtn = new double[rtnLen];
         int rtnIndex = 0;
         for (int i = 0; i < freqList.length; i++)
@@ -89,7 +111,26 @@ public class Statistics
 
     public static double[] most(double[] values)
     {
-        return new double[1];
+        double average = average(values);
+        int rtnLen = 0;
+        for (double value : values)
+        {
+            if (value >= average)
+                rtnLen++;
+        }
+
+        double[] rtn = new double[rtnLen];
+        int rtnIndex = 0;
+        for (double value : values)
+        {
+            if (value >= average)
+            {
+                rtn[rtnIndex] = value;
+                rtnIndex++;
+            }
+        }
+
+        return rtn;
     }
 
     // returns a sorted copy of values
